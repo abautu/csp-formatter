@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Content Security directive formatter</title>
+	</head>
+  <style>
+    .col {
+      display: inline-block;
+      width: 49%;
+      height: 100%;
+    }
+    .center {
+      text-align: center;
+    }
+  </style>
+	<body>
+    <h1>Content Security directive formatter</h1>
+		<div class="col center">
+			<label for="Input">Input</label>
+			<textarea id="Input" rows="30" cols="80"></textarea>
+		</div>
+    <div class="col center">
+			<label for="Output">Output</label>
+			<textarea id="Output" rows="30" cols="80"></textarea>
+		</div>
+    <div class="center">
+      &copy; 2022 Andrei Bautu
+    </div>
+    <script>
+      var input = document.getElementById('Input');
+      var output = document.getElementById('Output');
+      input.addEventListener('input', function() {
+        let directives = input.value
+        // cleanup extra white space
+        directives = directives.replace(/\s+/g, " ");
+        // split string into CSP directives
+        directives = directives.match(/[^;$]+/g);
+        // cleanup extra white spaces
+        directives = directives.map(e => e.trim());
+        // filter out empty directives
+        directives = directives.filter(e => e.length > 0);
+        // split directives into directive and values
+        directives = directives.map(e => e.split(/\s+/g))
+        // sort directives by directive
+        directives = directives.sort(function(a,b) {
+          // place first the directives with no values
+          if (a.length < 2) return -1;
+          if (b.length < 2) return 1;
+          // place then the default-src directive
+          if (a[0] == 'default-src') return -1;
+          if (b[0] == 'default-src') return 1;
+          // place last the report-uri
+          if (a[0] == 'report-uri') return 1;
+          if (b[0] == 'report-uri') return -1;
+          // lastly sort directives by directive name
+          return a[0].localeCompare(b[0]);
+        });
+        // format directives
+        directives = directives.map(function(e) {
+          let directive = e[0]; // directive
+          if (e.length > 1) {
+            let values = e.slice(1)
+            // remove duplicates
+            values = [...new Set(values)];
+            // sort values
+            values = values.sort();
+            directive += "\n  " + values.join("\n  ").trim();
+          }
+          directive += "\n;";
+          return directive;
+        });
+        output.value = directives.join('\n');
+      });
+    </script>
+	</body>
+</html>
