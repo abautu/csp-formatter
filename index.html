@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Content Security directive formatter</title>
-	</head>
+  <head>
+    <meta charset="utf-8">
+    <title>Content Security Policy formatter</title>
+  </head>
   <style>
     .col {
       display: inline-block;
@@ -14,16 +14,16 @@
       text-align: center;
     }
   </style>
-	<body>
-    <h1>Content Security directive formatter</h1>
-		<div class="col center">
-			<label for="Input">Input</label>
-			<textarea id="Input" rows="30" cols="80"></textarea>
-		</div>
+  <body>
+    <h1>Content Security Policy formatter</h1>
     <div class="col center">
-			<label for="Output">Output</label>
-			<textarea id="Output" rows="30" cols="80"></textarea>
-		</div>
+      <label for="Input">Input</label>
+      <textarea id="Input" rows="30" cols="80"></textarea>
+    </div>
+    <div class="col center">
+      <label for="Output">Output</label>
+      <textarea id="Output" rows="30" cols="80"></textarea>
+    </div>
     <div class="center">
       &copy; 2022 Andrei Bautu
     </div>
@@ -73,5 +73,5 @@
         output.value = directives.join('\n');
       });
     </script>
-	</body>
+  </body>
 </html>
